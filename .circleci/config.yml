@@ -38,5 +38,11 @@ jobs:
       # run tests!
       - run: git config --global user.email "samuraitruong@hotmail.com"
       - run: git config --global user.name "Truong Nguyen CI"
-      - run: yarn test
-      - run: yarn deploy
+      - run: 
+          name: Run UI test
+          command: yarn test
+          environment:
+            REACT_APP_WEB_API_URL=https://spiutldomryhinh/
+      - run: 
+          name: Deploy to GH 
+          command: yarn deploy
