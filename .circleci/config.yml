@@ -42,7 +42,7 @@ jobs:
           name: Run UI test
           command: yarn test
           environment:
-            REACT_APP_WEB_API_URL=https://spiutldomryhinh/
+            REACT_APP_WEB_API_URL: https://spiutldomryhinh/
       - run: 
           name: Deploy to GH 
           command: yarn deploy
