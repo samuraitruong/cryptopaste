@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button} from 'react-bootstrap'
 import HomeActions from '../redux/home-redux'
 import { connect } from 'react-redux'
-
+import pwgen from '../services/password-generator'
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
@@ -15,6 +15,12 @@ class HomeScreen extends Component {
      }
      getValidationState() {
 
+     }
+     generatePassword() {
+         const password = pwgen()
+         this.setState({
+            password
+         })
      }
      render() {
          return (
@@ -39,9 +45,9 @@ class HomeScreen extends Component {
                         <ControlLabel  className="float-left">Enter password</ControlLabel>
                             
                             <InputGroup>
-                            <FormControl type="text" />
+                            <FormControl type="text" value={this.state.password}/>
                             <InputGroup.Addon>
-                                <Button bsStyle="primary">Generate Password</Button>
+                                <Button bsStyle="primary" onClick={this.generatePassword.bind(this)}>Generate Password</Button>
                             </InputGroup.Addon>
                             </InputGroup>
                         </FormGroup>
