@@ -8,7 +8,8 @@ import history from '../services/history'
 const sagaMiddleware = createSagaMiddleware()
 const routeMiddleware = routerMiddleware(history)
 const rootReducer = combineReducers({
-    home: homeReducer
+    home: homeReducer,
+    router: routerReducer
   })
 // mount it on the Store
 const store = createStore(

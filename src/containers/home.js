@@ -1,73 +1,55 @@
 import React, {Component} from 'react'
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button} from 'react-bootstrap'
 import HomeActions from '../redux/home-redux'
 import { connect } from 'react-redux'
-import pwgen from '../services/password-generator'
+import TicketForm from '../components/ticket-form'
+import ViewTicket from '../components/view-ticket'
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            text:null,
-        }
+        this.state = { ticketId: null}
      }
-     handleChange(event) {
-
+     submitForm(text, password, expires, oneTime) {
+         this.props.submit(text, password, expires, oneTime)
      }
-     getValidationState() {
-
+     decryptTicket(id, password) {
+        this.props.decryptTicket(id, password)
      }
-     generatePassword() {
-         const password = pwgen()
-         this.setState({
-            password
-         })
+     createNew() {
+         this.props.reset()
+     }
+     delete(id, password) {
+        console.log('delete', {id, password})
+        this.props.deleteTicket(id, password)
+     }
+     componentWillReceiveProps(newProps) {
+         const {id} = newProps.home;
+         if(id && id !== this.state.ticketId) {
+             this.setState({ticketId: id})
+             this.props.getTicketInfo(id)
+         }
+         if(!id){
+            this.setState({ticketId: null})
+         } 
+     }
+     componentDidMount() {
+         const { ticketId } =  this.props
+         this.setState( { ticketId})
+         if(ticketId) {
+             this.props.getTicketInfo(ticketId)
+         }
      }
      render() {
-         return (
-             <div className="row mt-5">
-                <div className="col-md-12">
-                    <Form>
-                        <FormGroup
-                        controlId="formBasicText"
-                        validationState={this.getValidationState()}
-                        >
-                        <ControlLabel className="float-left">Enter text you want protect</ControlLabel>
-                        <FormControl
-                            componentClass="textarea" 
-                            value={this.state.text}
-                            placeholder="Enter text"
-                            onChange={this.handleChange}
-                            rows="7"
-                        />
-                        </FormGroup>
-
-                        <FormGroup>
-                        <ControlLabel  className="float-left">Enter password</ControlLabel>
-                            
-                            <InputGroup>
-                            <FormControl type="text" value={this.state.password}/>
-                            <InputGroup.Addon>
-                                <Button bsStyle="primary" onClick={this.generatePassword.bind(this)}>Generate Password</Button>
-                            </InputGroup.Addon>
-                            </InputGroup>
-                        </FormGroup>
-
-                        <FormGroup className="text-left">
-                            <Button bsStyle="success">PIN IT</Button>
-                            <Button bsStyle="danger">DELETE</Button>
-                        </FormGroup>
-                    </Form>
-                </div>
-          </div>
-          
-         )
+         const { sending, ticket, error, decrypted, deleting, deleted } = this.props.home;
+         return this.state.ticketId == null? <TicketForm onSubmit={this.submitForm.bind(this)} sending={sending}/> :  <ViewTicket deleted={deleted} deleting={deleting} key={this.state.ticketId} onDecrypt={this.decryptTicket.bind(this)} sending={sending} error={error} ticket={ticket} onCreateNew={this.createNew.bind(this)} decrypted={decrypted} onDelete={this.delete.bind(this)}/> 
      }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        submit: (text, password, expires) => {
-            dispatch(HomeActions.submit(text, password, expires))
-        }
+        submit: (text, password, expires, oneTime) =>  dispatch(HomeActions.submit(text, password, expires, oneTime)),
+        getTicketInfo: (ticketId) => dispatch(HomeActions.getTicketInfo(ticketId)),
+        decryptTicket : (ticketId, password) => dispatch(HomeActions.decryptTicket(ticketId, password)),
+        deleteTicket : (ticketId, password) => dispatch(HomeActions.deleteTicket(ticketId, password)),
+        reset :() => dispatch(HomeActions.reset())
     }
 }
 const mapStateToProps = (state, ownProps) => {

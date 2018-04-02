@@ -12,9 +12,25 @@ const api = create({
 //   });
 
 export const submitRequest = async(data) => {
-    const response = await api.post('submit', data)
+    console.log('submitRequest', data)
+    const response = await api.post('crypto/create', data)
+    return response;
+}
+export const getTicketInfo = async(ticketId) => {
+    const response = await api.get('crypto/details/'+ ticketId)
+    return response;
+}
+export const decrypTicket = async(data) => {
+    const response = await api.post('crypto/decrypt', data)
+    return response;
+}
+export const deleteTicket = async(data) => {
+    const response = await api.post('crypto/delete', data)
     return response;
 }
 export default {
-    submitRequest
+    submitRequest,
+    getTicketInfo,
+    decrypTicket,
+    deleteTicket
 }
