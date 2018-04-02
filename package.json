@@ -61,7 +61,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && copy build\\index.html build\\404.html",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
