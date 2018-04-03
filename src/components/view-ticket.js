@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Moment from 'moment'
 import { Link } from 'react-router-dom'
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Alert} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Alert} from 'react-bootstrap'
 import Loading from '../components/loading'
 export default class ViewTicket extends Component {
     constructor(props) {
