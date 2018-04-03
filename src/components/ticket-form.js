@@ -81,7 +81,7 @@ export default class TicketForm extends Component {
                         controlId="formBasicText"
                         validationState={this.getValidationState()}
                         >
-                        <ControlLabel>Enter text you want protect:</ControlLabel>
+                        <ControlLabel>Enter your content:</ControlLabel>
                         <FormControl
                             componentClass="textarea" 
                             value={this.state.text}
