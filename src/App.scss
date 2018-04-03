@@ -44,7 +44,9 @@
   color: white;
   width: 100%;
   padding: 15px 0;
-
+  .github-icon{
+    height: 30px;
+  }
   @include breakpoint(xs) {
     position: relative;
     height: auto;

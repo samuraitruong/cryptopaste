@@ -51,7 +51,12 @@ jobs:
           name: Run UI test
           command: yarn test
           environment:
-            REACT_APP_WEB_API_URL: https://spiutldomryhinh/
-      - run: 
-          name: Deploy to GH 
-          command: yarn deploy
+            REACT_APP_WEB_API_URL: https://dummy/
+      #- run: 
+      #    name: Deploy to GH 
+      #    command: yarn deploy
+  deployment:
+    production: # just a label; label names are completely up to you
+      branch: master
+      commands:
+        - yarn deploy

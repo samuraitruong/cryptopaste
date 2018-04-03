@@ -27,6 +27,9 @@ class App extends Component {
         <footer className="footer">
           <div className="container">
             Copyright 2018 by samuraitruong
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/samuraitruong/cryptopaste" title="Go to Github">
+              <img src="https://git-scm.com/images/logos/downloads/Git-Logo-1788C.png" className="float-right github-icon" alt="Go to github"/>
+            </a>
           </div>
         </footer>
       </div>
