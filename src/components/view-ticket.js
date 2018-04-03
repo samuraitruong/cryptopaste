@@ -1,12 +1,20 @@
 import React, {Component} from 'react'
 import Moment from 'moment'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import faCopy from '@fortawesome/fontawesome-free-solid/faCopy'
+
+
 import { Link } from 'react-router-dom'
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Alert} from 'react-bootstrap'
 import Loading from '../components/loading'
+
 export default class ViewTicket extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            copied: false,
             password: '',
             errorPassword: ''
         }
@@ -24,7 +32,12 @@ export default class ViewTicket extends Component {
         const password = e.target.value;
         this.setState({password})
     }
-
+    onCopy() {
+        this.setState({copied: true})
+        setTimeout(() => {
+            this.setState({copied: false})
+        }, 3000)
+    }
     render() {
         const {ticket, error, sending, decrypted, deleting, deleted} = this.props;
         console.log('deleted', deleted)
@@ -40,6 +53,13 @@ export default class ViewTicket extends Component {
             {error && (
                 <Alert bsStyle="warning">{error}</Alert>
             )}
+                <Alert bsStyle="success">
+                Your Url: {document.location.href}  
+                <span className="float-right pointer" title="Copy this link">
+                    {this.state.copied? "Copied  ": null}
+                    <CopyToClipboard text={document.location.href} onCopy={this.onCopy.bind(this)}><FontAwesomeIcon icon={faCopy} color="black" /></CopyToClipboard>
+                </span>
+                </Alert>
                 <FormGroup controlId="formBasicText">
                 <ControlLabel>{decrypted?"Your text message:":"Your encrypted message:"}</ControlLabel>
                 <FormControl

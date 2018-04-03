@@ -54,8 +54,21 @@
 }
 .app-main{
   padding-top: 25px;
-  padding-bottom: 35px;
+  padding-bottom: 135px;
   @include breakpoint(xs) {
     padding-top: 15px;
+    padding-bottom: 35px;
   }
+}
+.pointer{
+  cursor: pointer;
+}
+.copied-label{
+  right: 42px;
+  top: 34px;
+  height: 34px;
+  display: block;
+  padding: 6px 15px;
+  color:#000;
+  background: rgba(#f29a35, 0.5);
 }

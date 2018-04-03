@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
 import Select from 'react-select';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Col, Alert} from 'react-bootstrap'
+import Clipboard from 'clipboard-polyfill'
+//import { CopyToClipboard } from 'react-copy-to-clipboard';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faKey from '@fortawesome/fontawesome-free-solid/faKey'
+
+
 import pwgen from '../services/password-generator'
 
 export default class TicketForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            copied: false,
             text:'',
             password:'',
             expiresOpt: '',
@@ -31,8 +38,12 @@ export default class TicketForm extends Component {
      generatePassword() {
          const password = pwgen()
          this.setState({
-            password
+            password,
+            copied: true
          })
+         Clipboard.writeText(password).then(() => {
+            setTimeout(()=>this.setState({copied: false}), 3000)
+         });
      }
      handleExpiresOptChange(e) {
          if(e == null || e.value == null) {
@@ -44,8 +55,8 @@ export default class TicketForm extends Component {
         this.setState({ expiresOpt, expires })
     
      }
-     handleExpiresChange(e) {
-
+     handleExpiresChange({target:{value}}) {
+        this.setState({expires: value})
      }
      handleSubmit(f) {
         console.log(this.state)
@@ -81,18 +92,18 @@ export default class TicketForm extends Component {
                         { this.state.errorText && <HelpBlock className="text-danger">{this.state.errorText}</HelpBlock> }
                         </FormGroup>
 
-                        <FormGroup>
+                        <FormGroup className="position-relative">
                             <ControlLabel>Enter password:</ControlLabel>
                             
                             <InputGroup>
                             <FormControl type="text" value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
                             <InputGroup.Addon>
-                                <Button bsStyle="primary" onClick={this.generatePassword.bind(this)}>Generate Password</Button>
+                                <Button title="Generate a strong password" bsStyle="primary" onClick={this.generatePassword.bind(this)}><FontAwesomeIcon icon={faKey}/></Button>
                             </InputGroup.Addon>
                             </InputGroup>
 
                             { this.state.errorPassword && <HelpBlock className="text-danger">{this.state.errorPassword}</HelpBlock> }
-
+                            { this.state.copied && <span className="copied-label position-absolute">Copied</span> }
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Expires:</ControlLabel>
@@ -110,10 +121,11 @@ export default class TicketForm extends Component {
                                         { value: '1440', label: 'After 1 day' },
                                         { value: '43200', label: 'After 30 days' },
                                         { value: '528400', label: 'After a year' },
+                                        { value: '52840000', label: 'Infinity' },
                                         { value: '-1', label: 'Custom' },
-                                    ]}
+                                    ]}f
                                 />
-                                { (this.state.expiresOpt === '-1' ) & <FormControl type="text" value={this.state.expires} onChange={this.handleExpiresChange.bind(this)}/>}
+                                { (this.state.expiresOpt === '-1' ) && (<FormControl type="text" placeholder="Custom expires time in minute" className="col-md-4" value={this.state.expires} onChange={this.handleExpiresChange.bind(this)}/>)}
                             </Row>
                             { this.state.errorExpiresOpt && <HelpBlock className="text-danger">{this.state.errorExpiresOpt}</HelpBlock> }
 
@@ -121,8 +133,15 @@ export default class TicketForm extends Component {
                         <FormGroup className="text-right">
                             <Button bsStyle="success" disabled={sending} onClick={this.handleSubmit.bind(this)}>{sending?"Sending...": "BIN IT"}</Button> &nbsp;
                         </FormGroup>
+
+                        <Row>
+                            <Col xs={12} md={12}> 
+                            <Alert bsStyle="info">Your data will be protected with AES-256, We only storage the encrypted data so that if you loose your password it won't be recovery.</Alert>
+                            </Col>
+                        </Row>
+
                     </Form>
-             
+                    
           
         )
     }
