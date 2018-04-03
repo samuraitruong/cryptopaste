@@ -40,7 +40,6 @@ export default class ViewTicket extends Component {
     }
     render() {
         const {ticket, error, sending, decrypted, deleting, deleted} = this.props;
-        console.log('deleted', deleted)
         if(ticket === null &&  error === null) {
             return <Loading />
         }
@@ -68,8 +67,8 @@ export default class ViewTicket extends Component {
                     value={ticket.text}
                     rows="7"
                 />
-                {!ticket.oneTime && <HelpBlock className="text-primary">Your message will be expired in {Moment(ticket.expires*1000).fromNow()}.</HelpBlock> }
-                {ticket.oneTime && !decrypted && <HelpBlock className="text-primary">Your message will be deleted after read.</HelpBlock> }
+                 {!ticket.oneTime && !deleted && <HelpBlock className="text-primary">Your message will be expired in {Moment(ticket.expires*1000).fromNow()} ({Moment(ticket.expires*1000).format('DD/MM/YYYY h:mm:ss a')}).</HelpBlock> }
+                {ticket.oneTime && !decrypted && !deleted  && <HelpBlock className="text-primary">Your message will be deleted after read.</HelpBlock> }
                 {ticket.oneTime && decrypted && <HelpBlock className="text-danger">Your message has been deleted.</HelpBlock> }
 
                 </FormGroup>
