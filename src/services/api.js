@@ -12,7 +12,6 @@ const api = create({
 //   });
 
 export const submitRequest = async(data) => {
-    console.log('submitRequest', data)
     const response = await api.post('crypto/create', data)
     return response;
 }

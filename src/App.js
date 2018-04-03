@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route , Switch} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.scss';
+import Moment from 'moment'
 import Home from './containers/home'
 
 const ViewTicket = ({match}) => <Home ticketId={match.params.ticketid}/>
@@ -26,10 +27,16 @@ class App extends Component {
         </div>
         <footer className="footer">
           <div className="container">
-            Copyright 2018 by samuraitruong
+            <div className="float-left">
+              Copyright 2018 by samuraitruong <br/>
+            
+              <span className="font-weight-light last-update">Last update at: {Moment(process.env.buildTime).format()} </span>
+            </div>
+            <div className="float-right">
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/samuraitruong/cryptopaste" title="Go to Github">
-              <img src="https://git-scm.com/images/logos/downloads/Git-Logo-1788C.png" className="float-right github-icon" alt="Go to github"/>
+              <img src="https://git-scm.com/images/logos/downloads/Git-Logo-1788C.png" className="github-icon" alt="Go to github"/>
             </a>
+            </div>
           </div>
         </footer>
       </div>

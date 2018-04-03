@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
-
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
 
@@ -86,7 +85,15 @@ function getClientEnvironment(publicUrl) {
       return env;
     }, {}),
   };
-
+  const now = new Date();
+  const unix = Date.UTC(now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(), 
+      now.getUTCHours(), 
+      now.getUTCMinutes(), 
+      now.getUTCSeconds(), 
+      now.getUTCMilliseconds())
+  stringified['process.env'].buildTime = unix
   return { raw, stringified };
 }
 
