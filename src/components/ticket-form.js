@@ -131,12 +131,12 @@ export default class TicketForm extends Component {
 
                         </FormGroup>
                         <FormGroup className="text-right">
-                            <Button bsStyle="success" disabled={sending} onClick={this.handleSubmit.bind(this)}>{sending?"Sending...": "BIN IT"}</Button> &nbsp;
+                            <Button bsStyle="success" disabled={sending} onClick={this.handleSubmit.bind(this)}>{sending?"Sending...": "PROTECT IT"}</Button> &nbsp;
                         </FormGroup>
 
                         <Row>
                             <Col xs={12} md={12}> 
-                            <Alert bsStyle="info">Your data will be protected with AES-256, We only storage the encrypted data so that if you loose your password it won't be recovery.</Alert>
+                            <Alert bsStyle="info">Your data will be protected with AES-256, We only storage the encrypted data so that if you lost your password it won't be recovery.</Alert>
                             </Col>
                         </Row>
 
