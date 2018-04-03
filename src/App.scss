@@ -1,3 +1,5 @@
+@import './scss/_mixin.scss';
+
 .app {
   text-align: center;
 }
@@ -5,6 +7,10 @@
 .app-header-logo {
   animation: app-logo-spin infinite 20s linear;
   height: 80px;
+  @include breakpoint(xs) {
+    height: 45px;
+    float: left;
+  }
 }
 
 .app-header {
@@ -12,11 +18,18 @@
   height: 150px;
   padding: 20px;
   color: white;
+  @include breakpoint(xs) {
+    height: 60px;
+    padding:10px 15px;
+  }
 }
 
 .app-header-title {
   font-size: 1.5em;
-}
+  @include breakpoint(xs) {
+    padding-top: 5px;
+  }
+ }
 
 @keyframes app-logo-spin {
   from { transform: rotate(0deg); }
@@ -25,10 +38,22 @@
 
 .footer{
   position: fixed;
-    height: 50px;
-    bottom: 00px;
-    background: rgba(80, 90, 90, 1);
-    color: white;
-    width: 100%;
-    padding: 15px 0;
+  height: 50px;
+  bottom: 00px;
+  background: rgba(80, 90, 90, 1);
+  color: white;
+  width: 100%;
+  padding: 15px 0;
+
+  @include breakpoint(xs) {
+    position: relative;
+    height: auto;
+  }
+}
+.app-main{
+  padding-top: 25px;
+  padding-bottom: 35px;
+  @include breakpoint(xs) {
+    padding-top: 15px;
+  }
 }

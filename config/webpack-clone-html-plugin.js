@@ -6,8 +6,7 @@ function CloneHtmlPlugin(options) {
   
   CloneHtmlPlugin.prototype.apply = function (compiler) {
     compiler.plugin('compilation', (compilation) => {
-      console.log('The compiler is starting a new compilation...');
-  
+      console.log('Cloning index.html to 404.html');
       compilation.plugin(
         'html-webpack-plugin-after-html-processing',
         (data, cb) => {

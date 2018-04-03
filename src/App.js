@@ -15,7 +15,7 @@ class App extends Component {
           <h1 className="app-header-title">Text Crypto Paste</h1>
         </header>
         <div className="container app-main">
-          <div className="row mt-5">
+          <div className="row">
               <div className="col-md-12 text-left">
                 <Switch>
                   <Route exact path="/:ticketid" component={ViewTicket}/>
@@ -26,7 +26,7 @@ class App extends Component {
         </div>
         <footer className="footer">
           <div className="container">
-            Copyright@2018 by samuraitruong@hotmail.com
+            Copyright 2018 by samuraitruong
           </div>
         </footer>
       </div>
