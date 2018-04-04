@@ -74,3 +74,21 @@
   font-size: 12px;
   color:#aaa;
 }
+.content-zone{
+  border: 1px dotted #777;
+  padding:10px;
+  word-wrap: break-word;
+  min-height: 150px;
+}
+.editor {
+  border-left: dotted 1px #777;
+  border-right: dotted 1px #777;
+  border-bottom: dotted 1px #777;
+  &-toolbar{
+    background: #ddd !important;
+  }
+  &-input-control{
+    padding:0px 10px 10px 5px;
+    min-height: 150px;
+  }
+}

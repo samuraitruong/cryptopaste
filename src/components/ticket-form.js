@@ -2,17 +2,21 @@ import React, {Component} from 'react'
 import Select from 'react-select';
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Col, Alert} from 'react-bootstrap'
 import Clipboard from 'clipboard-polyfill'
+import { Editor } from 'react-draft-wysiwyg';
+import {EditorState} from 'draft-js'
+import {stateToHTML} from 'draft-js-export-html'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 //import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faKey from '@fortawesome/fontawesome-free-solid/faKey'
-
-
 import pwgen from '../services/password-generator'
 
 export default class TicketForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            editorState: EditorState.createEmpty(),
             copied: false,
             text:'',
             password:'',
@@ -59,9 +63,9 @@ export default class TicketForm extends Component {
         this.setState({expires: value})
      }
      handleSubmit(f) {
-        console.log(this.state)
-        const {text, password, expires, expiresOpt} = this.state;
-        const errorText = (text === '')?'Please enter text': null
+        
+        const {text, password, expires, expiresOpt, editorState} = this.state;
+        const errorText = !editorState.getCurrentContent().hasText()?'Please enter text': null
         const errorPassword = (password === '')?'Please enter or generate a password': null
         const errorExpiresOpt = (expiresOpt === '')?'Please select expires time ': null
         this.setState({errorText, errorPassword, errorExpiresOpt})
@@ -71,6 +75,11 @@ export default class TicketForm extends Component {
         }
         const oneTime = expiresOpt === '0'
         this.props.onSubmit(text, password, expires, oneTime)
+     }
+     onEditorStateChange(editorState) {
+        const text = stateToHTML(editorState.getCurrentContent())
+
+        this.setState({editorState, text})
      }
     render() {
         const { sending } = this.props;
@@ -82,13 +91,14 @@ export default class TicketForm extends Component {
                         validationState={this.getValidationState()}
                         >
                         <ControlLabel>Enter your content:</ControlLabel>
-                        <FormControl
-                            componentClass="textarea" 
-                            value={this.state.text}
-                            placeholder="Enter text"
-                            onChange={this.handleTextChange.bind(this)}
-                            rows="7"
-                        />
+                        <Editor
+                            editorState={this.state.editorState}
+                            toolbarClassName="editor-toolbar"
+                            wrapperClassName="editor"
+                            editorClassName="editor-input-control"
+                            onEditorStateChange={this.onEditorStateChange.bind(this)}
+                            />
+                        
                         { this.state.errorText && <HelpBlock className="text-danger">{this.state.errorText}</HelpBlock> }
                         </FormGroup>
 
