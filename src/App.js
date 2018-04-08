@@ -8,7 +8,9 @@ import Home from './containers/home'
 const ViewTicket = ({match}) => <Home ticketId={match.params.ticketid}/>
 
 class App extends Component {
+  
   render() {
+    const test=process.env.branch
     return (
       <div className="app">
         <header className="app-header">
@@ -28,7 +30,7 @@ class App extends Component {
         <footer className="footer">
           <div className="container">
             <div className="float-left">
-              Copyright 2018 by samuraitruong -- {process.env.branch}<br/>
+              Copyright 2018 by samuraitruong<br/>
             
               <span className="font-weight-light last-update">Last update at: {Moment(process.env.buildTime).format()} </span>
             </div>
