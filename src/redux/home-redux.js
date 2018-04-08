@@ -27,10 +27,12 @@ export const submitSuccess = (state = INITIAL_STATE, {id, expires}) => {
   return { ...state, sending: false, error: null, id, expires }
 }
 
-export const sendingRequest = (state = INITIAL_STATE, {ticketId}) => {
+export const getTicketInfo = (state = INITIAL_STATE, {ticketId}) => {
   return { ...state, error: null, sending: true, id:ticketId}
 }
-
+export const submit = (state = INITIAL_STATE, action) => {
+  return { ...state, error: null, sending: true, id:null}
+}
 export const submitError = (state = INITIAL_STATE, {error}) => {
   return { ...state, sending: false, error }
 }
@@ -67,8 +69,9 @@ export const deleteTicketSuccess = (state = INITIAL_STATE, {ticket}) => {
 // map our action types to our reducer functions
 export const HANDLERS = {
   [HomeActionTypes.SUBMIT_SUCCESS]: submitSuccess,
+  [HomeActionTypes.SUBMIT]: submit,
   [HomeActionTypes.SUBMIT_ERROR]: submitError,
-  [HomeActionTypes.GET_TICKET_INFO]: sendingRequest,
+  [HomeActionTypes.GET_TICKET_INFO]: getTicketInfo,
   [HomeActionTypes.GET_TICKET_INFO_SUCCESS]: getTicketInfoSuccess,
   [HomeActionTypes.GET_TICKET_INFO_ERROR]: getTicketInfoError,
   [HomeActionTypes.DECRYPT_TICKET]: decryptTicketRequest,
