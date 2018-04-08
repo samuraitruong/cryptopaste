@@ -28,7 +28,7 @@ class App extends Component {
         <footer className="footer">
           <div className="container">
             <div className="float-left">
-              Copyright 2018 by samuraitruong <br/>
+              Copyright 2018 by samuraitruong -- {process.env.CIRCLE_BRANCH}<br/>
             
               <span className="font-weight-light last-update">Last update at: {Moment(process.env.buildTime).format()} </span>
             </div>
