@@ -10,7 +10,6 @@ const ViewTicket = ({match}) => <Home ticketId={match.params.ticketid}/>
 class App extends Component {
   
   render() {
-    const test=process.env.branch
     return (
       <div className="app">
         <header className="app-header">
