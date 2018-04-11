@@ -94,6 +94,7 @@ function getClientEnvironment(publicUrl) {
       now.getUTCSeconds(), 
       now.getUTCMilliseconds())
   stringified['process.env'].buildTime = unix
+  //stringified['process.env'].branch = "master"
   return { raw, stringified };
 }
 

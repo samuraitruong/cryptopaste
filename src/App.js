@@ -10,6 +10,7 @@ import StatisticWidget from './containers/statistic-widget'
 const ViewTicket = ({match}) => <Home ticketId={match.params.ticketid}/>
 
 class App extends Component {
+  
   render() {
     return (
       <div className="app">
