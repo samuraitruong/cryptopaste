@@ -14,14 +14,16 @@ const { Types, Creators } = createActions({
     reset: null,
     deleteTicket: ['id', 'password'],
     deleteTicketSuccess: ['ticket'],
-    deleteTicketError: ['error']
+    deleteTicketError: ['error'],
+    onSync: ['stats'],
+    startSync: null,
 
   }, {});
   
 export const HomeActionTypes = Types;
 export default Creators; 
 // the initial state of this reducer
-export const INITIAL_STATE =  Immutable({ ticket:null, error: null, errorMessage: null, sending: false, deleted : false, deleting: false })
+export const INITIAL_STATE =  Immutable({ stats:{}, ticket:null, error: null, errorMessage: null, sending: false, deleted : false, deleting: false })
 
 export const submitSuccess = (state = INITIAL_STATE, {id, expires}) => {
   return { ...state, sending: false, error: null, id, expires }
@@ -65,6 +67,9 @@ export const deleteTicketSuccess = (state = INITIAL_STATE, {ticket}) => {
   return { ...state, deleting: false, error: null, deleted: true}
 }
 
+export const onSync = (state = INITIAL_STATE, {stats}) => {
+  return { ...state, stats}
+}
 
 // map our action types to our reducer functions
 export const HANDLERS = {
@@ -80,6 +85,7 @@ export const HANDLERS = {
   [HomeActionTypes.RESET]: reset,
   [HomeActionTypes.DELETE_TICKET]: deleteTicket,
   [HomeActionTypes.DELETE_TICKET_SUCCESS]: deleteTicketSuccess,
+  [HomeActionTypes.ON_SYNC]: onSync,
 }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)
