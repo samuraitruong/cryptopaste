@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 class StatisticWidget extends Component {
-    constructor(props) {
-        super(props)
-     }
-     
      render() {
          const {stats: {encrypt=0, decrypt}} = this.props.home;
         return (<span className="text-success">
