@@ -62,7 +62,7 @@ export default class ViewTicket extends Component {
                 <FormGroup controlId="formBasicText">
                 <ControlLabel>{decrypted?"Your text message:":"Your encrypted message:"}</ControlLabel>
                 <div dangerouslySetInnerHTML={ {__html:ticket.text}} className="content-zone"/>
-                 {!ticket.oneTime && !deleted && <HelpBlock className="text-primary">Your message will be expired in {Moment(ticket.expires*1000).fromNow()} ({Moment(ticket.expires*1000).format('DD/MM/YYYY h:mm:ss a')}).</HelpBlock> }
+                 {!ticket.oneTime && !deleted && <HelpBlock className="text-primary">Your message will be expired {Moment(ticket.expires*1000).fromNow()} ({Moment(ticket.expires*1000).format('DD/MM/YYYY h:mm:ss a')}).</HelpBlock> }
                 {ticket.oneTime && !decrypted && !deleted  && <HelpBlock className="text-primary">Your message will be deleted after read.</HelpBlock> }
                 {ticket.oneTime && decrypted && <HelpBlock className="text-danger">Your message has been deleted.</HelpBlock> }
 

@@ -1,3 +1,6 @@
 [submodule "backend-api"]
 	path = backend-api
 	url = git@github.com:samuraitruong/cryptopaste-api.git
+[submodule "firebase"]
+	path = firebase
+	url = git@github.com:samuraitruong/cryptopaste-firebase.git
