@@ -2,7 +2,7 @@ import { createReducer, createActions   } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
-    submit: ['text','password','expires', 'oneTime'],
+    submit: ['text','password','expires', 'oneTime', 'ipAddresses'],
     submitSuccess: ['id','expires'],
     submitError: ['error'],
     getTicketInfo:['ticketId'],
@@ -17,7 +17,9 @@ const { Types, Creators } = createActions({
     deleteTicketError: ['error'],
     onSync: ['stats'],
     startSync: null,
-
+    detectIp: null,
+    detectIpSuccess: ['ip'],
+    detectIpError: ['status']
   }, {});
   
 export const HomeActionTypes = Types;
@@ -41,6 +43,10 @@ export const submitError = (state = INITIAL_STATE, {error}) => {
 
 export const getTicketInfoSuccess = (state = INITIAL_STATE, {ticket}) => {
   return { ...state, sending: false, error: null, ticket, id: ticket.id }
+}
+export const detectIpSuccess = (state = INITIAL_STATE, {ip}) => {
+  console.log('detectIpSuccess', ip)
+  return { ...state, ip }
 }
 
 export const getTicketInfoError = (state = INITIAL_STATE, {error}) => {
@@ -70,7 +76,10 @@ export const deleteTicketSuccess = (state = INITIAL_STATE, {ticket}) => {
 export const onSync = (state = INITIAL_STATE, {stats}) => {
   return { ...state, stats}
 }
-
+export const detectIpError = (state = INITIAL_STATE, {status}) => {
+  console.log('status', status)
+  return { ...state, status}
+}
 // map our action types to our reducer functions
 export const HANDLERS = {
   [HomeActionTypes.SUBMIT_SUCCESS]: submitSuccess,
@@ -86,6 +95,7 @@ export const HANDLERS = {
   [HomeActionTypes.DELETE_TICKET]: deleteTicket,
   [HomeActionTypes.DELETE_TICKET_SUCCESS]: deleteTicketSuccess,
   [HomeActionTypes.ON_SYNC]: onSync,
+  [HomeActionTypes.DETECT_IP_SUCCESS]: detectIpSuccess,
 }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)

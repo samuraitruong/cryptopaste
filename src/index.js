@@ -9,6 +9,7 @@ import App from './App';
 import store from './redux/store'
 import registerServiceWorker from './registerServiceWorker';
 store.dispatch(HomeActions.startSync())
+store.dispatch(HomeActions.detectIp())
 
 ReactDOM.render((<Provider store={store}>
     <BrowserRouter>

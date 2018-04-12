@@ -8,8 +8,8 @@ class HomeScreen extends Component {
         super(props)
         this.state = { ticketId: null}
      }
-     submitForm(text, password, expires, oneTime) {
-         this.props.submit(text, password, expires, oneTime)
+     submitForm(text, password, expires, oneTime, ipAddresses) {
+         this.props.submit(text, password, expires, oneTime, ipAddresses)
      }
      decryptTicket(id, password) {
         this.props.decryptTicket(id, password)
@@ -39,13 +39,13 @@ class HomeScreen extends Component {
          }
      }
      render() {
-         const { sending, ticket, error, decrypted, deleting, deleted } = this.props.home;
-         return this.state.ticketId == null? <TicketForm onSubmit={this.submitForm.bind(this)} sending={sending}/> :  <ViewTicket deleted={deleted} deleting={deleting} key={this.state.ticketId} onDecrypt={this.decryptTicket.bind(this)} sending={sending} error={error} ticket={ticket} onCreateNew={this.createNew.bind(this)} decrypted={decrypted} onDelete={this.delete.bind(this)}/> 
+         const { sending, ticket, error, decrypted, deleting, deleted, ip } = this.props.home;
+         return this.state.ticketId == null? <TicketForm  ip={ip} onSubmit={this.submitForm.bind(this)} sending={sending}/> :  <ViewTicket deleted={deleted} deleting={deleting} key={this.state.ticketId} onDecrypt={this.decryptTicket.bind(this)} sending={sending} error={error} ticket={ticket} onCreateNew={this.createNew.bind(this)} decrypted={decrypted} onDelete={this.delete.bind(this)}/> 
      }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        submit: (text, password, expires, oneTime) =>  dispatch(HomeActions.submit(text, password, expires, oneTime)),
+        submit: (text, password, expires, oneTime, ipAddresses) =>  dispatch(HomeActions.submit(text, password, expires, oneTime, ipAddresses)),
         getTicketInfo: (ticketId) => dispatch(HomeActions.getTicketInfo(ticketId)),
         decryptTicket : (ticketId, password) => dispatch(HomeActions.decryptTicket(ticketId, password)),
         deleteTicket : (ticketId, password) => dispatch(HomeActions.deleteTicket(ticketId, password)),
