@@ -3,9 +3,9 @@ import {push} from 'react-router-redux'
 import HomeActions, {HomeActionTypes} from '../redux/home-redux'
 import Api from '../services/api'
 import { ErrorMessages } from '../shared/error-messages'
-function* submitRequestSaga({text, password, expires, oneTime}) {
+function* submitRequestSaga({text, password, expires, oneTime, ipAddresses}) {
    try {
-      const response = yield call(Api.submitRequest, {text, expires, password, oneTime});
+      const response = yield call(Api.submitRequest, {text, expires, password, oneTime, ipAddresses});
       const { data } = response;
       
       if(response.ok) {
@@ -23,9 +23,11 @@ function* submitRequestSaga({text, password, expires, oneTime}) {
 }
 
 function* getTicketInfoSaga({ticketId}) {
+  
   try {
      const response = yield call(Api.getTicketInfo, ticketId);
      const { data } = response;
+     console.log('xxxxxxx', response);
      if(response.ok) {
        yield put(HomeActions.getTicketInfoSuccess(data))
      }
@@ -72,12 +74,31 @@ function* deleteTicketSaga({id, password}) {
   }
 }
 
+function* detectIPSaga() {
+  try {
+     const response = yield call(Api.detectIp);
+     const { data } = response;
+     if(response.status === 200) {
+       yield put(HomeActions.detectIpSuccess(data.ip))
+     }
+     else {
+       yield put(HomeActions.detectIpError());
+    }
+
+  } catch (err) {
+     console.log(err);
+     yield put(HomeActions.detectIpError());
+  }
+}
+
+
 function* homeSaga() {
   yield all([
     takeEvery(HomeActionTypes.SUBMIT, submitRequestSaga),
     takeEvery(HomeActionTypes.GET_TICKET_INFO, getTicketInfoSaga),
     takeEvery(HomeActionTypes.DECRYPT_TICKET, decryptTicketSaga),
     takeEvery(HomeActionTypes.DELETE_TICKET, deleteTicketSaga),
+    takeEvery(HomeActionTypes.DETECT_IP, detectIPSaga),
   ])
 }
 
