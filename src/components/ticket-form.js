@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Select from 'react-select';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Col, Alert, Checkbox} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Col, Alert} from 'react-bootstrap'
 import Clipboard from 'clipboard-polyfill'
 import { Editor } from 'react-draft-wysiwyg';
 import {EditorState} from 'draft-js'
