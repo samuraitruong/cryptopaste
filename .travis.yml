@@ -13,9 +13,9 @@ git:
 #    - git submodule update --init --recursive
 script:
 # - cd test-app
-  - npm install
-  - npm test
-  - npm run build
+  - yarn
+  - yarn test
+  - yarn build
 # deploy:
 #   provider: pages
 #   skip_cleanup: true
