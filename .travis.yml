@@ -1,5 +1,6 @@
 env:
-  - REACT_APP_WEB_API_URL=HTTPS://TEST
+  - REACT_APP_WEB_API_URL=https://23cmp7wdc4.execute-api.ap-southeast-2.amazonaws.com/dev
+  # This is the DEV enpoint for all CI Branch
 language: node_js
 node_js:
   - "stable"
@@ -25,6 +26,7 @@ deploy:
   target_branch: ci-gh-pages
   github_token: $GITHUB_TOKEN
   local_dir: build
+  commit_message: '[ci skip] published by TravisCI'
   on:
   #  branch: master
     all_branches: true
