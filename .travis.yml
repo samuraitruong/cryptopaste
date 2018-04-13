@@ -1,5 +1,5 @@
 env:
-  - CREATE_REACT_APP_API_URL=HTTPS://TEST
+  - REACT_APP_WEB_API_URL=HTTPS://TEST
 language: node_js
 node_js:
   - "stable"
