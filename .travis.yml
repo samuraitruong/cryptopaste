@@ -16,11 +16,11 @@ script:
   - yarn
   - yarn test
   - yarn build
- deploy:
-   provider: pages
-   skip_cleanup: true
-   target_branch: ci-gh-pages
-   github_token: $githubToken
-   local_dir: build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  target_branch: ci-gh-pages
+  github_token: $githubToken
+  local_dir: build
 #   on:
 #     branch: master
