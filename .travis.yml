@@ -23,7 +23,7 @@ deploy:
   all_branches: true
   skip_cleanup: true
   target_branch: ci-gh-pages
-  github_token: "$GITHUB_TOKEN"
+  github_token: $GITHUB_TOKEN
   local_dir: build
   on:
   #  branch: master
