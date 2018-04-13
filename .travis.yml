@@ -18,6 +18,7 @@ script:
   - yarn build
 deploy:
   provider: pages
+  all_branches: true
   skip_cleanup: true
   target_branch: ci-gh-pages
   github_token: $githubToken
