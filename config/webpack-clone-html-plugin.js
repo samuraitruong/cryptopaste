@@ -6,11 +6,11 @@ function CloneHtmlPlugin(options) {
   
   CloneHtmlPlugin.prototype.apply = function (compiler) {
     compiler.plugin('compilation', (compilation) => {
-      console.log('Cloning index.html to 404.html');
       compilation.plugin(
-        'html-webpack-plugin-after-html-processing',
+        'html-webpack-plugin-after-emit',
         (data, cb) => {
           //data.html += 'The Magic Footer'
+          console.log('Cloning index.html to 404.html');
             
           fs.writeFileSync('./build/404.html', data.html)
   
