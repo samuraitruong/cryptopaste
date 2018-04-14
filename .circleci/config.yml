@@ -9,6 +9,7 @@ general:
     #  - master
     ignore:
       - gh-pages
+      - ci-gh-pages
 notify:
   webhooks:
     - url: https://hooks.slack.com/services/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
