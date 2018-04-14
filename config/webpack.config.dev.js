@@ -143,6 +143,9 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
+            // query: {
+            //   presets: ['react', 'es2015', 'stage-2'],
+            // },
             options: {
               
               // This is a feature of `babel-loader` for webpack (not Babel itself).

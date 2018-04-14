@@ -1,0 +1,24 @@
+env:
+  secure: peZVlODach6zWjiK42Dl0lzawD8nGZCVq0TnZnAgreHLa01snuzVNQ9IzeFqMNQK7du4dYdyOk1in7Pq4etAybFPBjieknnRdBaVR90doOiYrgsRi7gLhlV7VQwjkfQiVbG9vhfRJ2+GnJ/n38j5QTrYXEkQYOTf6u7lu9gKXIeto5RtpJL258Ebb08POqxrCrnzyID3ntErNsUM6bCqOU0HiDfyuU4znomRo8Drxzl75wI5q1CMzWGbukM55Yz+kTdVpwQFsLfgNtpks2QX4ELKuAa5HB9+tB0+rxUKVtY8C2DfjDUm7Cox2AIcORSMAvQnWodZe0VuhrkuYmI1rloaYkddSrxY7uoeeVZ8eBCzXFS4qTlDC+vyrJ3JOhKlDtpTGHgCiREiuIEEu+VPBb0I12BPTOqs3cPe9JP1riUctL44icpwFDB0bnJMvIXhShPwoO7STtnObSu2UZxtDcnjHYk+YJ0xfKXYJD0lcs6zEK8sboBYbPfBPZXW5fGmxDI6HD+tcMxVRDV6roUKmyMkpT4oz2z7XV2LXtr8gUbyM92M3swLSfPpev5zVH2ZTBXjinsocqJcqBOkTYTnF091CTGg4tBppWAP1WqSV6kBQWjGe+thhvVQs8FAIaRGumtogly9+6sLoZhY1hw5C7mWq50MssERjSE9kxp+vVo=
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+git:
+  submodules: false
+script:
+- yarn
+- yarn test
+- yarn build
+deploy:
+  provider: pages
+  all_branches: true
+  skip_cleanup: true
+  target_branch: ci-gh-pages
+  github_token: "$GITHUB_TOKEN"
+  local_dir: build
+  commit_message: "[ci skip] published by TravisCI"
+  on:
+    all_branches: true
