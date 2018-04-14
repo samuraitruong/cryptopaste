@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
+import ReactPasswordStrength from './react-password-strength'
 import Select from 'react-select';
-import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Button, Row, Col, Alert} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Row, Col, Alert} from 'react-bootstrap'
 import Clipboard from 'clipboard-polyfill'
 import { Editor } from 'react-draft-wysiwyg';
 import {EditorState} from 'draft-js'
@@ -35,7 +36,8 @@ export default class TicketForm extends Component {
         this.setState({text})
      }
      handlePasswordChange(event) {
-        const password = event.target.value;
+        //console.log('event', event)
+        const password = event.password;
         this.setState({password})
      }
      getValidationState() {
@@ -47,6 +49,7 @@ export default class TicketForm extends Component {
             password,
             copied: true
          })
+         this.reactPasswordStrength.setValue( password);
          Clipboard.writeText(password).then(() => {
             setTimeout(()=>this.setState({copied: false}), 3000)
          });
@@ -110,19 +113,25 @@ export default class TicketForm extends Component {
                 
                 { this.state.errorText && <HelpBlock className="text-danger">{this.state.errorText}</HelpBlock> }
                 </FormGroup>
-
                 <FormGroup className="position-relative">
                     <ControlLabel>Enter password:</ControlLabel>
-                    
-                    <InputGroup>
-                    <FormControl type="text" value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
-                    <InputGroup.Addon>
-                        <Button title="Generate a strong password" bsStyle="primary" onClick={this.generatePassword.bind(this)}><FontAwesomeIcon icon={faKey}/></Button>
-                    </InputGroup.Addon>
-                    </InputGroup>
+                    <div className="row">
+                        <div class="col-md-12">
+                            <ReactPasswordStrength
+                                ref={ref => this.reactPasswordStrength = ref}
+                                minLength={5}
+                                minScore={2}
+                                scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}
+                                changeCallback={this.handlePasswordChange.bind(this)}
+                                inputProps={{ name: "password_input", autoComplete: "off", className: "form-control", type:"text"}}
+                                />
+                        
+                            <Button className="btn-generate-password" title="Generate a strong password" bsStyle="primary" onClick={this.generatePassword.bind(this)}><FontAwesomeIcon icon={faKey}/></Button>
 
-                    { this.state.errorPassword && <HelpBlock className="text-danger">{this.state.errorPassword}</HelpBlock> }
-                    { this.state.copied && <span className="copied-label position-absolute">Copied</span> }
+                            { this.state.errorPassword && <HelpBlock className="text-danger">{this.state.errorPassword}</HelpBlock> }
+                            { this.state.copied && <span className="copied-label position-absolute">Password copied to clipboard</span> }
+                        </div>
+                    </div>
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Expires:</ControlLabel>

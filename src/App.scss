@@ -62,13 +62,15 @@
   cursor: pointer;
 }
 .copied-label{
-  right: 42px;
-  top: 34px;
-  height: 34px;
-  display: block;
-  padding: 6px 15px;
-  color:#000;
-  background: rgba(#f29a35, 0.5);
+  right: 16px;
+    left: 17px;
+    top: 2px;
+    height: 46px;
+    color: rgb(0, 0, 0);
+    background: rgba(#061b3d, 0.76);
+    color: #fff;
+    padding: 13px;
+    text-align: center;
 }
 .last-update{
   font-size: 12px;
@@ -91,4 +93,12 @@
     padding:0px 10px 10px 5px;
     min-height: 150px;
   }
+}
+.btn-generate-password {
+  position: absolute;
+    top: 0px;
+    height: 48px;
+    right: 16px;
+    width: 54px;
+    border-radius: 0;
 }
