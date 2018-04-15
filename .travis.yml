@@ -22,3 +22,5 @@ deploy:
   commit_message: "[ci skip] published by TravisCI"
   on:
     all_branches: true
+notifications:
+    slack: samuraitruong:FXQZ2yjmeEVZEN2E1nWyAmRp
