@@ -5,7 +5,7 @@ import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Row, Col,
 import Clipboard from 'clipboard-polyfill'
 import { Editor } from 'react-draft-wysiwyg';
 import {EditorState} from 'draft-js'
-import {stateToHTML} from 'draft-js-export-html'
+//import {stateToHTML} from 'draft-js-export-html'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 //import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -69,7 +69,7 @@ export default class TicketForm extends Component {
      }
      handleSubmit(f) {
         
-        const {text, password, expires, expiresOpt, editorState, ipRestricted, ipAddresses} = this.state;
+        const {password, expires, expiresOpt, editorState, ipRestricted, ipAddresses} = this.state;
         const errorText = !editorState.getCurrentContent().hasText()?'Please enter text': null
         const errorPassword = (password === '')?'Please enter or generate a password': null
         const errorExpiresOpt = (expiresOpt === '')?'Please select expires time ': null
@@ -86,11 +86,13 @@ export default class TicketForm extends Component {
             addresses.push(ip)
             ipAddresses.split(';').map(x => addresses.push(x))
         }
-        this.props.onSubmit(text, password, expires, oneTime, addresses)
+        const html = document.querySelector('.DraftEditor-editorContainer').innerHTML;
+        //console.log('html', html)
+        this.props.onSubmit(html, password, expires, oneTime, addresses)
      }
      onEditorStateChange(editorState) {
-        const text = stateToHTML(editorState.getCurrentContent())
-
+        const text = editorState.getCurrentContent().getPlainText();
+        
         this.setState({editorState, text})
      }
     render() {
@@ -116,7 +118,7 @@ export default class TicketForm extends Component {
                 <FormGroup className="position-relative">
                     <ControlLabel>Enter password:</ControlLabel>
                     <div className="row">
-                        <div class="col-md-12">
+                        <div className="col-md-12">
                             <ReactPasswordStrength
                                 ref={ref => this.reactPasswordStrength = ref}
                                 minLength={5}
