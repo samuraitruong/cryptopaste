@@ -23,7 +23,6 @@
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "draft-js": "^0.10.5",
-    "draft-js-export-html": "^1.2.0",
     "draft-js-import-html": "^1.2.1",
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.1.0",

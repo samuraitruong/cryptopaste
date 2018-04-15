@@ -27,7 +27,6 @@ function* getTicketInfoSaga({ticketId}) {
   try {
      const response = yield call(Api.getTicketInfo, ticketId);
      const { data } = response;
-     console.log('xxxxxxx', response);
      if(response.ok) {
        yield put(HomeActions.getTicketInfoSuccess(data))
      }
