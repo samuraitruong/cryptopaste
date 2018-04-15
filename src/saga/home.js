@@ -3,9 +3,18 @@ import {push} from 'react-router-redux'
 import HomeActions, {HomeActionTypes} from '../redux/home-redux'
 import Api from '../services/api'
 import { ErrorMessages } from '../shared/error-messages'
-function* submitRequestSaga({text, password, expires, oneTime, ipAddresses}) {
+import encryption from '../services/encryption'
+
+function* submitRequestSaga({text, password, expires, oneTime, ipAddresses, clientMode}) {
    try {
-      const response = yield call(Api.submitRequest, {text, expires, password, oneTime, ipAddresses});
+     let submitData =  {text, password, expires, oneTime, ipAddresses, clientMode}
+     if(clientMode) {
+        const encryptedData = encryption.encrypt(text, password)
+        delete submitData.password
+        submitData = {...submitData, ...encryptedData }
+     }
+
+      const response = yield call(Api.submitRequest, submitData);
       const { data } = response;
       
       if(response.ok) {
@@ -40,9 +49,17 @@ function* getTicketInfoSaga({ticketId}) {
      yield put(HomeActions.getTicketInfoError());
   }
 }
-function* decryptTicketSaga({id, password}) {
+function* decryptTicketSaga({ticket, password}) {
   try {
-     const response = yield call(Api.decrypTicket, {id, password});
+     if(ticket.clientMode) {
+        console.log('client decryption')
+        ticket.text = encryption.decrypt(ticket.text, password, ticket.iv, ticket.tag)
+      
+        yield put(HomeActions.decryptTicketSuccess(ticket))
+        return;
+     }
+     const response = yield call(Api.decrypTicket, {id: ticket.id, password});
+     
      const { data } = response;
      if(response.ok) {
        yield put(HomeActions.decryptTicketSuccess(data))
@@ -56,16 +73,21 @@ function* decryptTicketSaga({id, password}) {
      yield put(HomeActions.decryptTicketError());
   }
 }
-function* deleteTicketSaga({id, password}) {
+function* deleteTicketSaga({ticket, password}) {
   try {
-     const response = yield call(Api.deleteTicket, {id, password});
-     const { data } = response;
-     if(response.ok) {
-       yield put(HomeActions.deleteTicketSuccess(data))
-     }
-     else {
-       yield put(HomeActions.deleteTicketError(response.status));
-    }
+      console.log('delete ticket', ticket)
+       if(ticket.clientMode) {
+         password = null
+       }
+
+      const response = yield call(Api.deleteTicket, {id: ticket.id, password});
+      const { data } = response;
+      if(response.ok) {
+        yield put(HomeActions.deleteTicketSuccess(data))
+      }
+      else {
+        yield put(HomeActions.deleteTicketError(response.status));
+      }
 
   } catch (err) {
      console.log(err);

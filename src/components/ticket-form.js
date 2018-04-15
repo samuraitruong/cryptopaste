@@ -18,6 +18,7 @@ export default class TicketForm extends Component {
         super(props)
         this.state = {
             editorState: EditorState.createEmpty(),
+            clientMode: true,
             copied: false,
             ipRestricted: false,
             text:'',
@@ -69,7 +70,7 @@ export default class TicketForm extends Component {
      }
      handleSubmit(f) {
         
-        const {password, expires, expiresOpt, editorState, ipRestricted, ipAddresses} = this.state;
+        const {password, expires, expiresOpt, editorState, ipRestricted, ipAddresses, clientMode} = this.state;
         const errorText = !editorState.getCurrentContent().hasText()?'Please enter text': null
         const errorPassword = (password === '')?'Please enter or generate a password': null
         const errorExpiresOpt = (expiresOpt === '')?'Please select expires time ': null
@@ -88,7 +89,7 @@ export default class TicketForm extends Component {
         }
         const html = document.querySelector('.DraftEditor-editorContainer').innerHTML;
         //console.log('html', html)
-        this.props.onSubmit(html, password, expires, oneTime, addresses)
+        this.props.onSubmit(html, password, expires, oneTime, addresses, clientMode)
      }
      onEditorStateChange(editorState) {
         const text = editorState.getCurrentContent().getPlainText();
@@ -100,6 +101,15 @@ export default class TicketForm extends Component {
         return (
             
             <Form onSubmit={this.handleSubmit.bind(this)}>
+                <FormGroup>
+                <div className="pretty p-switch p-fill">
+                    <input type="checkbox" checked={this.state.clientMode} onChange={({target: {checked}}) => this.setState({clientMode: checked})} />
+                    <div className="state">
+                        <label>Enable Client Encrypt/Decrypt</label>
+                    </div>
+                </div>
+                
+                </FormGroup>
                 <FormGroup
                 controlId="formBasicText"
                 validationState={this.getValidationState()}
@@ -162,7 +172,7 @@ export default class TicketForm extends Component {
                 </FormGroup>
                 <FormGroup>
                 <div className="pretty p-icon p-rotate">
-                    <input type="checkbox" checked={this.state.ipRestricted} onChange={({target: {checked}}) => this.setState({ipRestricted: checked})} />
+                    <input type="checkbox" disabled={this.state.clientMode} checked={this.state.ipRestricted} onChange={({target: {checked}}) => this.setState({ipRestricted: checked})} />
                     <div className="state p-success">
                         <i className="icon mdi mdi-check"></i>
                         <label>IP Restricts:</label>

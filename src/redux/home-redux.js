@@ -2,17 +2,17 @@ import { createReducer, createActions   } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
-    submit: ['text','password','expires', 'oneTime', 'ipAddresses'],
+    submit: ['text','password','expires', 'oneTime', 'ipAddresses', 'clientMode'],
     submitSuccess: ['id','expires'],
     submitError: ['error'],
     getTicketInfo:['ticketId'],
     getTicketInfoSuccess:['ticket'],
     getTicketInfoError:['error'],
-    decryptTicket : ['id', 'password'],
+    decryptTicket : ['ticket', 'password'],
     decryptTicketSuccess:['ticket'],
     decryptTicketError:['error'],
     reset: null,
-    deleteTicket: ['id', 'password'],
+    deleteTicket: ['ticket', 'password'],
     deleteTicketSuccess: ['ticket'],
     deleteTicketError: ['error'],
     onSync: ['stats'],
