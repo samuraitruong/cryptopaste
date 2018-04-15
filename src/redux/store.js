@@ -2,14 +2,16 @@
 import { createStore, applyMiddleware , combineReducers} from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
-import HomeActions, { reducer as homeReducer } from './home-redux'
+import { reducer as homeReducer } from './home-redux'
+import { reducer as faqReducer } from './faq-redux'
 import rootSaga from '../saga'
 import history from '../services/history'
 const sagaMiddleware = createSagaMiddleware()
 const routeMiddleware = routerMiddleware(history)
 const rootReducer = combineReducers({
     home: homeReducer,
-    router: routerReducer
+    router: routerReducer,
+    faq: faqReducer
   })
 
  
@@ -18,7 +20,7 @@ const store = createStore(
     rootReducer,
   applyMiddleware(sagaMiddleware, routeMiddleware)
 )
-store.dispatch(HomeActions.startSync())
+
 // then run the saga
 sagaMiddleware.run(rootSaga)
 export default store
