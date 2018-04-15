@@ -10,7 +10,7 @@ class FAQScreen extends Component {
         this.props.getFAQ();
     }
     render() {
-        const { loading, faqs} = this.props.faq
+        const { faqs} = this.props.faq
         if(faqs.length === 0) {
             return <span>Loading....</span>
         }
