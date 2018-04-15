@@ -38,6 +38,11 @@ export default class ViewTicket extends Component {
             this.setState({copied: false})
         }, 3000)
     }
+    maskedText(text, decrypted) {
+        if(decrypted || text.length < 500) return text;
+
+        return text.substr(0, 500) + " ... ";
+    }
     render() {
         const {ticket, error, sending, decrypted, deleting, deleted} = this.props;
         if(ticket === null &&  error === null) {
@@ -61,7 +66,7 @@ export default class ViewTicket extends Component {
                 </Alert>
                 <FormGroup controlId="formBasicText">
                 <ControlLabel>{decrypted?"Your text message:":"Your encrypted message:"}</ControlLabel>
-                <div dangerouslySetInnerHTML={ {__html:ticket.text}} className="content-zone"/>
+                <div dangerouslySetInnerHTML={ {__html: this.maskedText(ticket.text, decrypted)}} className="content-zone"/>
                  {!ticket.oneTime && !deleted && <HelpBlock className="text-primary">Your message will be expired {Moment(ticket.expires*1000).fromNow()} ({Moment(ticket.expires*1000).format('DD/MM/YYYY h:mm:ss a')}).</HelpBlock> }
                 {ticket.oneTime && !decrypted && !deleted  && <HelpBlock className="text-primary">Your message will be deleted after read.</HelpBlock> }
                 {ticket.oneTime && decrypted && <HelpBlock className="text-danger">Your message has been deleted.</HelpBlock> }
