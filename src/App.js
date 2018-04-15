@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
 import { Route , Switch} from 'react-router-dom'
-import logo from './logo.svg';
 import './App.scss';
 import Moment from 'moment'
 import Home from './containers/home'
+import AppHeader from './components/app-header'
 import StatisticWidget from './containers/statistic-widget'
+import FAQ from './containers/faq'
 
 const ViewTicket = ({match}) => <Home ticketId={match.params.ticketid}/>
 
@@ -14,14 +15,13 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <header className="app-header">
-          <img src={logo} className="app-header-logo app-logo-spin" alt="logo" />
-          <h1 className="app-header-title">Text Crypto Paste</h1>
-        </header>
+        <AppHeader></AppHeader>
+        
         <div className="container app-main">
           <div className="row">
               <div className="col-md-12 text-left">
                 <Switch>
+                  <Route exact path="/faq" component={FAQ}/>
                   <Route exact path="/:ticketid" component={ViewTicket}/>
                   <Route path="/" component={Home}/>
                 </Switch>
