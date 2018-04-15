@@ -26,7 +26,7 @@ export default class ViewTicket extends Component {
         if(errorPassword !== '') {
             return;
         }
-        this.props.onDecrypt(this.props.ticket.id, password)
+        this.props.onDecrypt(this.props.ticket, password)
     }
     handlePasswordChange(e) {
         const password = e.target.value;
@@ -82,10 +82,10 @@ export default class ViewTicket extends Component {
                     <FormControl type="password" value={this.state.password} onChange={this.handlePasswordChange.bind(this)} readOnly={decrypted}/>
                     <InputGroup.Addon>
                     { !decrypted && <Button bsStyle="primary" onClick={this.handleSubmit.bind(this)} readOnly={sending}>{sending? "DECRYPTING...":" DECRYPT "}</Button> }
-                    { decrypted && <Button bsStyle="danger" onClick={()=> this.props.onDelete(ticket.id, this.state.password)}>{deleting?"DELETING...":"DELETE"}</Button> }
+                    { decrypted && <Button bsStyle="danger" onClick={()=> this.props.onDelete(ticket, this.state.password)}>{deleting?"DELETING...":"DELETE"}</Button> }
                     </InputGroup.Addon>
                     </InputGroup>
-
+                    
                     { this.state.errorPassword && <HelpBlock className="text-danger">{this.state.errorPassword}</HelpBlock> }
 
                 </FormGroup>)}

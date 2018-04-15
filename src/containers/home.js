@@ -8,18 +8,18 @@ class HomeScreen extends Component {
         super(props)
         this.state = { ticketId: null}
      }
-     submitForm(text, password, expires, oneTime, ipAddresses) {
-         this.props.submit(text, password, expires, oneTime, ipAddresses)
+     submitForm(text, password, expires, oneTime, ipAddresses, clientMode) {
+         this.props.submit(text, password, expires, oneTime, ipAddresses, clientMode)
      }
-     decryptTicket(id, password) {
-        this.props.decryptTicket(id, password)
+     decryptTicket(ticket, password) {
+        this.props.decryptTicket(ticket, password)
      }
      createNew() {
          this.props.reset()
      }
-     delete(id, password) {
-        console.log('delete', {id, password})
-        this.props.deleteTicket(id, password)
+     
+     delete(ticket, password) {
+        this.props.deleteTicket(ticket, password)
      }
      componentWillReceiveProps(newProps) {
          const {id} = newProps.home;
@@ -45,10 +45,10 @@ class HomeScreen extends Component {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        submit: (text, password, expires, oneTime, ipAddresses) =>  dispatch(HomeActions.submit(text, password, expires, oneTime, ipAddresses)),
+        submit: (text, password, expires, oneTime, ipAddresses, clientMode) =>  dispatch(HomeActions.submit(text, password, expires, oneTime, ipAddresses, clientMode)),
         getTicketInfo: (ticketId) => dispatch(HomeActions.getTicketInfo(ticketId)),
-        decryptTicket : (ticketId, password) => dispatch(HomeActions.decryptTicket(ticketId, password)),
-        deleteTicket : (ticketId, password) => dispatch(HomeActions.deleteTicket(ticketId, password)),
+        decryptTicket : (ticket, password) => dispatch(HomeActions.decryptTicket(ticket, password)),
+        deleteTicket : (ticket, password) => dispatch(HomeActions.deleteTicket(ticket, password)),
         reset :() => dispatch(HomeActions.reset())
     }
 }
