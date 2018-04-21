@@ -23,6 +23,7 @@ class HomeScreen extends Component {
      }
      componentWillReceiveProps(newProps) {
          const {id} = newProps.home;
+         console.log('componentWillReceiveProps', id)
          if(id && id !== this.state.ticketId) {
              this.setState({ticketId: id})
              this.props.getTicketInfo(id)
@@ -33,10 +34,11 @@ class HomeScreen extends Component {
      }
      componentDidMount() {
          const { ticketId } =  this.props
-         this.setState( { ticketId})
-         if(ticketId) {
-             this.props.getTicketInfo(ticketId)
-         }
+         this.setState( { ticketId}, ()=> {
+            if(ticketId) {
+                this.props.getTicketInfo(ticketId)
+            }
+        })
      }
      render() {
          const { sending, ticket, error, decrypted, deleting, deleted, ip } = this.props.home;

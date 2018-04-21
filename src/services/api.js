@@ -13,6 +13,10 @@ const api = create({
 //     //timeout: 1000,
 //     //headers: {'X-Custom-Header': 'foobar'}
 //   });
+export const getS3Content = async(ticketId) => {
+    const response = await Axios.get(process.env.REACT_APP_S3_URL + ticketId)
+    return response;
+}
 export const detectIp = async() => {
     const response = await Axios.get('https://api.ipify.org/?format=json')
     return response;
@@ -49,5 +53,6 @@ export default {
     decrypTicket,
     deleteTicket,
     detectIp,
-    getFAQ
+    getFAQ,
+    getS3Content
 }
