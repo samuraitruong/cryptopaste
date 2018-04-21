@@ -32,11 +32,20 @@ function* submitRequestSaga({text, password, expires, oneTime, ipAddresses, clie
 }
 
 function* getTicketInfoSaga({ticketId}) {
-  
+  console.log('getTicketInfoSaga', ticketId)
   try {
      const response = yield call(Api.getTicketInfo, ticketId);
      const { data } = response;
      if(response.ok) {
+       if(data.s3) {
+         const ticketContentResponse = yield call(Api.getS3Content, ticketId)
+         if(ticketContentResponse.status === 200) {
+          data.text = ticketContentResponse.data;
+         }
+         else{
+           return put(HomeActions.getTicketInfoError(ErrorMessages[response.status]));
+         }
+       }
        yield put(HomeActions.getTicketInfoSuccess(data))
      }
      else {
